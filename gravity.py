@@ -10,36 +10,49 @@ def render(objects):
         pygame.draw.circle(screen,(255,255,255),(int(object.xpos),int(object.ypos)),object.radius)
 
 def step(objects):
-    stepped = []
+    steppedObjects = []
     for current in objects:
         forcex = 0
         forcey = 0
+        stepped = Object(current.radius,current.xpos,current.ypos,current.xvel,current.yvel)
+
         for object in objects:
             if current == object:
                 continue
 
-            distancex = (current.xpos-object.xpos)
-            distancey = (current.ypos-object.ypos)
+            distancex = (object.xpos-current.xpos)
+            distancey = (object.ypos-current.ypos)
             theta = math.atan2(distancey,distancex)
 
             distance = math.sqrt(distancex ** 2 + distancey ** 2)
-            if distance < max(current.radius,object.radius):
-                distance = max(current.radius,object.radius)
             force = ((current.radius ** 2) * (object.radius ** 2))/distance ** 2
 
-            forcex -= force * math.cos(theta)
-            forcey -= force * math.sin(theta)
+            if distance < current.radius+object.radius:
+                len1 = distance - object.radius
+                len2 = distance - current.radius
+                toAdjust = (distance - len1 - len2)
+
+                distance = current.radius+object.radius
+                force = ((current.radius ** 2) * (object.radius ** 2))/distance ** 2
+                force = -force * 20
+
+                stepped.xpos -= toAdjust*math.cos(theta)
+                stepped.ypos -= toAdjust*math.sin(theta)
+
+            forcex += force * math.cos(theta)
+            forcey += force * math.sin(theta)
 
 
         accelx = forcex/(current.radius ** 2)
         accely = forcey/(current.radius ** 2)
-        current.xvel += accelx
-        current.yvel += accely
-        current.xpos += current.xvel
-        current.ypos += current.yvel
-        stepped.append(current)
 
-    return stepped
+        stepped.xvel += accelx
+        stepped.yvel += accely
+        stepped.xpos += stepped.xvel
+        stepped.ypos += stepped.yvel
+        steppedObjects.append(stepped)
+
+    return steppedObjects
 
 class Object:
     def __init__(self,radius,xpos,ypos,xvel,yvel):
