@@ -42,66 +42,39 @@ def iterate(cells):
         for y in range(len(cells[0])):
             surroundingCount = 0
 
-            if x == 0:
-                if y == 0:
-                    surroundingCount += cells[x+1][y]
-                    surroundingCount += cells[x][y+1]
-                    surroundingCount += cells[x+1][y+1]
+            try:
+                surroundingCount += cells[x-1][y-1]
+            except:
+                pass
 
-                elif y == len(cells[0])-1:
-                    surroundingCount += cells[x][y-1]
-                    surroundingCount += cells[x+1][y-1]
-                    surroundingCount += cells[x+1][y]
-
-                else:
-                    surroundingCount += cells[x][y-1]
-                    surroundingCount += cells[x+1][y-1]
-                    surroundingCount += cells[x+1][y]
-                    surroundingCount += cells[x][y+1]
-                    surroundingCount += cells[x+1][y+1]
-
-            elif x == len(cells)-1:
-                if y == 0:
-                    surroundingCount += cells[x-1][y]
-                    surroundingCount += cells[x-1][y+1]
-                    surroundingCount += cells[x][y+1]
-
-                elif y == len(cells[0])-1:
-                    surroundingCount += cells[x-1][y-1]
-                    surroundingCount += cells[x][y-1]
-                    surroundingCount += cells[x-1][y]
-
-                else:
-                    surroundingCount += cells[x-1][y-1]
-                    surroundingCount += cells[x][y-1]
-                    surroundingCount += cells[x-1][y]
-                    surroundingCount += cells[x-1][y+1]
-                    surroundingCount += cells[x][y+1]
-
-            else:
-                if y == 0:
-                    surroundingCount += cells[x-1][y]
-                    surroundingCount += cells[x+1][y]
-                    surroundingCount += cells[x-1][y+1]
-                    surroundingCount += cells[x][y+1]
-                    surroundingCount += cells[x+1][y+1]
-
-                elif y == len(cells[0])-1:
-                    surroundingCount += cells[x-1][y-1]
-                    surroundingCount += cells[x][y-1]
-                    surroundingCount += cells[x+1][y-1]
-                    surroundingCount += cells[x-1][y]
-                    surroundingCount += cells[x+1][y]
-
-                else:
-                    surroundingCount += cells[x-1][y-1]
-                    surroundingCount += cells[x][y-1]
-                    surroundingCount += cells[x+1][y-1]
-                    surroundingCount += cells[x-1][y]
-                    surroundingCount += cells[x+1][y]
-                    surroundingCount += cells[x-1][y+1]
-                    surroundingCount += cells[x][y+1]
-                    surroundingCount += cells[x+1][y+1]
+            try:
+                surroundingCount += cells[x][y-1]
+            except:
+                pass
+            try:
+                surroundingCount += cells[x+1][y-1]
+            except:
+                pass
+            try:
+                surroundingCount += cells[x-1][y]
+            except:
+                pass
+            try:
+                surroundingCount += cells[x+1][y]
+            except:
+                pass
+            try:
+                surroundingCount += cells[x-1][y+1]
+            except:
+                pass
+            try:
+                surroundingCount += cells[x][y+1]
+            except:
+                pass
+            try:
+                surroundingCount += cells[x+1][y+1]
+            except:
+                pass
 
             if (surroundingCount == 2 or surroundingCount == 3) and cells[x][y] == 1:
                 newCells[x][y] = 1
